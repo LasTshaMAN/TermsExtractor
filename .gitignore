@@ -1,5 +1,8 @@
 .idea/
 __pycache__/
 lib/
-
 Thumbs.db
+/clustered_corpus/
+/result_prev.txt
+/result.txt
+/target.txt

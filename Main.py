@@ -46,8 +46,9 @@ def main():
         candidate_to_params_mapping,
         candidate_to_dfs_in_each_cluster_mapping
     )
-    table.align = 'l'
-    print(table)
+
+    save_as_file(table)
+    print('Done.')
 
 
 def read_clustered_corpus(path):
@@ -82,7 +83,7 @@ def generate_table_based_on(
         candidate_to_params_mapping,
         candidate_to_dfs_in_each_cluster_mapping
 ):
-    result = PrettyTable(['Candidate', 'Rank', 'TF', 'IDF', 'CU', 'DF_1', 'DF_2', 'DF_3'])
+    result = PrettyTable(['Candidate', 'Rank', 'TF', 'IDF', 'CU', 'DF_1', 'DF_2'])
 
     sorted_mapping = sorted(candidate_to_rank_mapping.items(), key=operator.itemgetter(1), reverse=True)
     for candidate, rank in sorted_mapping:
@@ -93,10 +94,15 @@ def generate_table_based_on(
         dfs_in_each_cluster = candidate_to_dfs_in_each_cluster_mapping[candidate]
         df_1 = dfs_in_each_cluster[0]
         df_2 = dfs_in_each_cluster[1]
-        df_3 = dfs_in_each_cluster[2]
-        result.add_row([candidate, str(rank), str(tf), str(idf), str(cu), str(df_1), str(df_2), str(df_3)])
+        result.add_row([candidate, str(rank), str(tf), str(idf), str(cu), str(df_1), str(df_2)])
 
     return result
+
+
+def save_as_file(table):
+    table.align = 'l'
+    with open('result.txt', mode='w', encoding='utf-8') as result_file:
+        result_file.write(table.get_string())
 
 
 if __name__ == "__main__":
